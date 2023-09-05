@@ -1,5 +1,6 @@
 import { getPool } from "./../database/connection";
 const sql = require("mssql");
+const lotesBL = require('../bussiness/loteBL.js')
 
 
 
@@ -47,7 +48,14 @@ const getPlagas3 = async (req, res) => {
       res.status(500).json(response);
   }
 };
-
+const getPlagas4 = async (req, res) => {
+    lotesBL.searchLotes().then(result => {
+        res.json(result)
+    }).catch(error => {
+        console.log(error)
+        res.json(error)
+    })
+  };
 
 export const methods =
 {
