@@ -3,7 +3,7 @@ const sql = require("mssql");
 
 
 //STORE PROCEDURE
-const registerLote = async (objectRegister) => {
+const registerEmpleado = async (objectRegister) => {
     try {
       const pool = await getPool();
   

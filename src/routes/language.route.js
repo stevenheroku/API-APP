@@ -13,8 +13,8 @@ const router2 = Router();
 //ARBOLES
 
 //LOTES
-router.get("/lotes",lotesController.getLotes);
-router.post("addLote",lotesController.registerLote);
+//router.get("/lotes",lotesController.getLotes);
+//router.post("addLote",lotesController.registerLote);
 
 //PLAGAS
 router.get("/plagas1",plagasController.getPlagas2);
