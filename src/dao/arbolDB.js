@@ -46,11 +46,11 @@ const registerArbol = async (objectRegister) => {
   }
 
 //obtener Arbol
-const GetArbol = async () => {
+const GetArbol = async (idlote) => {
     const pool = await getPool(); 
         // Ejecutar el Stored Procedure
         const LoteResult = await pool.request()
-            .input('idArbol', sql.Int, 0)
+            .input('idLote', sql.Int, idlote)
             .execute('[dbo].[GET_ARBOL_LOTE]');
             console.log("get:"+LoteResult);
     return new Promise((resolve, reject) => {

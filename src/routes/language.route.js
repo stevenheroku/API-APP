@@ -17,9 +17,9 @@ const router2 = Router();
 //router.post("addLote",lotesController.registerLote);
 
 //PLAGAS
-router.get("/plagas1",plagasController.getPlagas2);
+//router.get("/plagas1",plagasController.getPlagas2);
 
-router.get("/plagas2",plagasController.getPlagas3);
+//router.get("/plagas2",plagasController.getPlagas3);
 
 //ENFERMEDADES
 

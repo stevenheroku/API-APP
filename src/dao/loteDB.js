@@ -49,7 +49,7 @@ const registerLote = async (objectRegister) => {
   }
 
 //obtener lote
-const GetLote2 = async () => {
+const GetLote = async () => {
     const pool = await getPool(); 
         // Ejecutar el Stored Procedure
         const LoteResult = await pool.request()
@@ -74,35 +74,10 @@ const deleteLote = async (idLote) => {
         resolve(deletedIdLote)
     })
 }
-const GetLote = async (req, res) => {
-    try {
-        const pool = await getPool();
-        // Ejecutar el Stored Procedure
-        const result = await pool.request()
-            //.input('id', sql.Int, 1)
-            .execute('[dbo].[GET_PARADAS_ARBOL]');
-        
-        // Crear el objeto de respuesta estándar
-        const response = {
-            successful: true,
-            status: 200,
-            data: result.recordset 
-        };
-        console.log("imprimir"+response);
-        res.status(200).json(response);
-    } catch (error) {
-        const response = {
-            successful: false,
-            status: 500,
-            error: error.message
-        };
-    }
-  };
 
 export const methods =
 {
     GetLote,
-    GetLote2,
     registerLote,
     deleteLote
 }

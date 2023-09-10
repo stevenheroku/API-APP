@@ -1,9 +1,10 @@
 import { methods as arbolDB } from "../dao/arbolDB.js";
+import { methods as bitacoraDB } from "../dao/bitacoraDB.js";
 
-function searchArbol() {
+function searchArbol(idlote) {
     return new Promise(async(resolve, reject) => {
         var mr;
-        var result = await arbolDB.GetArbol();
+        var result = await arbolDB.GetArbol(idlote);
 
         try {
             if (result.recordset.length > 0) {
@@ -23,13 +24,26 @@ function searchArbol() {
 }
 
 function insertArbol(objectRegister) {
+    const {
+        IdEmpleado
+    }=objectRegister;
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.registerArbol(objectRegister);
         try {
-            if (result) {
-                mr = { state: 200, data: [{ info: "Arbol Registrado con Éxito!", idArbol: result.recordsets }], message: "SUCCES" };;
-            } else {
+            if (result.recordset[0].Arbol>0) {
+                mr = { state: 200, data: [{ info: "Arbol Registrado con Éxito!", idArbol: result.recordsets }], message: "SUCCES" };
+                var json =  {"Descripcion": "se registró un nuevo árbol","IdEmpleado": IdEmpleado };
+                var data="Registro Árbol -> "+JSON.stringify(json)+""
+                await bitacoraDB.registerBitacora(data,IdEmpleado);
+            } else if(result.recordset[0].Arbol==-1){
+                mr = {
+                    state: 204,
+                    data: "El lote no existe",
+                    message: "ERROR",
+                };
+            }
+            else {
                 mr = {
                     state: 204,
                     data: "No se pudo insertar en la base de datos",
@@ -45,13 +59,19 @@ function insertArbol(objectRegister) {
 }
 
 function updatetArbol(objectRegister) {
+    const {
+        IdEmpleado
+    }=objectRegister;
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.registerArbol(objectRegister);
         console.log()
         try {
             if (result) {
-                mr = { state: 200, data: [{ info: "Arbol Actualizado con Éxito!", idArbol: result.recordsets }], message: "SUCCES" };;
+                mr = { state: 200, data: [{ info: "Arbol Actualizado con Éxito!", idArbol: result.recordsets }], message: "SUCCES" };
+                var json =  {"Descripcion": "se actualizó un nuevo Arbol","IdEmpleado": IdEmpleado };
+                var data="Actualización Arbol -> "+JSON.stringify(json)+""
+                await bitacoraDB.registerBitacora(data,IdEmpleado);
             } else {
                 mr = {
                     state: 204,
@@ -67,14 +87,17 @@ function updatetArbol(objectRegister) {
     });
 }
 
-function deleteArbol(idArbol) {
+function deleteArbol(IdEmpleado,idArbol) {
     return new Promise(async(resolve, reject) => {
         let mr
         try {
             let loteData = await arbolDB.deleteArbol(idArbol)
             console.log("del:"+loteData)
             if (loteData >0) {
-                mr = { state: 200, data: "Arbol: " + idArbol + " eliminado correctamente", message: "SUCCESS" }
+                mr = { state: 200, data: "Arbol: " + idArbol + " eliminado correctamente", message: "SUCCESS" };
+                var json =  {"Descripcion": "se eliminó el arbol: "+idArbol+"","idArbol":idArbol,"IdEmpleado": IdEmpleado };
+                var data="Eliminación Árbol -> "+JSON.stringify(json)+""
+                await bitacoraDB.registerBitacora(data,IdEmpleado);
             } else {
                 mr = {
                     state: 204,

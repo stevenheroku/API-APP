@@ -1,12 +1,15 @@
+//import { getPool } from "./../database/connection";
+//const sql = require("mssql");
+
 const express = require("express");
-import { methods as plagasBL } from "../bussiness/plagasBL.js";
+import { methods as fincaBL } from "../bussiness/fincaBL.js";
 const routes = express.Router();
 
 
 
-routes.get("/plaga", (req, res) => {
+routes.get("/finca", (req, res) => {
   console.log("entro al controller");
-  plagasBL.getPlagas()
+  fincaBL.getFinca()
     .then((result) => {
       res.json(result);
     })

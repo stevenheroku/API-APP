@@ -7,9 +7,11 @@ const routes = express.Router();
 
 
 
-routes.get("/arbol", (req, res) => {
+routes.get("/arbol/:idLote", (req, res) => {
+  let idLote = req.params['idLote'];
+
   console.log("entro al controller");
-  arbolBL.searchArbol()
+  arbolBL.searchArbol(idLote)
     .then((result) => {
       res.json(result);
     })
@@ -53,11 +55,12 @@ routes.put("/updateArbol", async (req, res) => {
   }
 });
 
-routes.delete('/deleteArbol/:idArbol', (req, res) => {
+routes.delete('/deleteArbol/:idEmpleado/:idArbol', (req, res) => {
     let idLote = req.params['idArbol'];
+    let idEmpleado = req.params['idEmpleado'];
     console.log("entro controller");
     console.log("idArbol:"+idLote);
-    arbolBL.deleteArbol(idLote).then(result => {
+    arbolBL.deleteArbol(idEmpleado,idLote).then(result => {
         res.json(result)
     }).catch(error => {
         res.json(error)

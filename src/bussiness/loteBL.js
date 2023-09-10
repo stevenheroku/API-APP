@@ -1,9 +1,10 @@
 import { methods as loteDB } from "../dao/loteDB.js";
+import { methods as bitacoraDB } from "../dao/bitacoraDB.js";
 
 function searchLotes() {
     return new Promise(async(resolve, reject) => {
         var mr;
-        var result = await loteDB.GetLote2();
+        var result = await loteDB.GetLote();
 
         try {
             if (result.recordset.length > 0) {
@@ -23,12 +24,18 @@ function searchLotes() {
 }
 
 function insertLote(objectRegister) {
+    const {
+        IdEmpleado
+    }=objectRegister;
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await loteDB.registerLote(objectRegister);
         try {
             if (result) {
-                mr = { state: 200, data: [{ info: "Lote Registrado con Éxito!", idLote: result.recordsets }], message: "SUCCES" };;
+                mr = { state: 200, data: [{ info: "Lote Registrado con Éxito!", idLote: result.recordsets }], message: "SUCCES" };
+                var json =  {"Descripcion": "se registró un nuevo lote","IdEmpleado": IdEmpleado };
+                var data="Registro Lote -> "+JSON.stringify(json)+""
+                await bitacoraDB.registerBitacora(data,IdEmpleado);
             } else {
                 mr = {
                     state: 204,
@@ -45,13 +52,19 @@ function insertLote(objectRegister) {
 }
 
 function updatetLote(objectRegister) {
+    const {
+        IdEmpleado
+    }=objectRegister;
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await loteDB.registerLote(objectRegister);
         console.log()
         try {
             if (result) {
-                mr = { state: 200, data: [{ info: "Lote Actualizado con Éxito!", idLote: result.recordsets }], message: "SUCCES" };;
+                mr = { state: 200, data: [{ info: "Lote Actualizado con Éxito!", idLote: result.recordsets }], message: "SUCCES" };
+                var json =  {"Descripcion": "se actualizó un nuevo lote","IdEmpleado": IdEmpleado };
+                var data="Actualización Lote -> "+JSON.stringify(json)+""
+                await bitacoraDB.registerBitacora(data,IdEmpleado);
             } else {
                 mr = {
                     state: 204,
@@ -67,7 +80,7 @@ function updatetLote(objectRegister) {
     });
 }
 
-function deleteLote(idLote) {
+function deleteLote(IdEmpleado,idLote) {
     return new Promise(async(resolve, reject) => {
         let mr
         try {
@@ -75,6 +88,9 @@ function deleteLote(idLote) {
             console.log("del:"+loteData)
             if (loteData >0) {
                 mr = { state: 200, data: "Lote: " + idLote + " eliminado correctamente", message: "SUCCESS" }
+                var json =  {"Descripcion": "se eliminó el lote: "+idLote+"","idLote":idLote,"IdEmpleado": IdEmpleado };
+                var data="Eliminación Lote -> "+JSON.stringify(json)+""
+                await bitacoraDB.registerBitacora(data,IdEmpleado);
             } else {
                 mr = {
                     state: 204,

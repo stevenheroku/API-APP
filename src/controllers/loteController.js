@@ -19,7 +19,7 @@ const getLotes = async (req, res) => {
     });
 };
 
-routes.get("/lote2", (req, res) => {
+routes.get("/lote", (req, res) => {
   console.log("entro al controller");
   loteBL
     .searchLotes()
@@ -66,73 +66,17 @@ routes.put("/updateLote", async (req, res) => {
   }
 });
 
-routes.delete('/deleteLote/:idLote', (req, res) => {
+routes.delete('/deleteLote/:idempleado/:idLote', (req, res) => {
     let idLote = req.params['idLote'];
+    let idempleado = req.params['idempleado'];
     console.log("entro controller");
     console.log("idLote:"+idLote);
-    loteBL.deleteLote(idLote).then(result => {
+    loteBL.deleteLote(idempleado,idLote).then(result => {
         res.json(result)
     }).catch(error => {
         res.json(error)
     })
 })
 
-
-//STORE PROCEDURE
-const registerLote = async (req, res) => {
-  try {
-    const pool = await getPool();
-    // Ejecutar el Stored Procedure
-    const result = await pool
-      .request()
-      .input("pidLote", sql.Int, res)
-      .execute("[dbo].[ADD_UPDATE_LOTE]");
-
-    // Crear el objeto de respuesta estándar
-    const response = {
-      successful: true,
-      status: 200,
-    };
-
-    res.status(200).json(response);
-  } catch (error) {
-    const response = {
-      successful: false,
-      status: 500,
-      error: error.message,
-    };
-
-    res.status(500).json(response);
-  }
-};
-
-//obtener lote
-const GetLote = async (req, res) => {
-  try {
-    const pool = await getPool();
-    // Ejecutar el Stored Procedure
-    const result = await pool
-      .request()
-      //.input('id', sql.Int, 1)
-      .execute("[dbo].[GET_PARADAS_ARBOL]");
-
-    // Crear el objeto de respuesta estándar
-    const response = {
-      successful: true,
-      status: 200,
-      data: result.recordset, // Suponiendo que la data que deseas retornar está en result.recordset
-    };
-
-    res.status(200).json(response);
-  } catch (error) {
-    const response = {
-      successful: false,
-      status: 500,
-      error: error.message,
-    };
-
-    res.status(500).json(response);
-  }
-};
 
 module.exports = routes;
