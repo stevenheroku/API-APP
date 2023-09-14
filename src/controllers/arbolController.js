@@ -21,14 +21,58 @@ routes.get("/arbol/:idLote", (req, res) => {
     });
 });
 
+routes.get("/arbolPlagas/:idArbol", (req, res) => {
+  let idArbol = req.params['idArbol'];
+
+  console.log("entro al controller");
+  arbolBL.searchArbolPlagas(idArbol)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
+routes.get("/arbolEnfermedades/:idArbol", (req, res) => {
+  let idArbol = req.params['idArbol'];
+
+  console.log("entro al controller");
+  arbolBL.searchArbolEnfermedades(idArbol)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
+
 routes.post("/newArbol", async (req, res) => {
   try {
-    let lote = req.body;
-    lote.operacion = 1;
+    let arbol = req.body;
+    arbol.operacion = 1;
     console.log(req.body);
     // Verifica si los datos están presentes en req.body
 
-    const result = await arbolBL.insertArbol(lote);
+    const result = await arbolBL.insertArbol(arbol);
+
+    // Maneja el resultado según tus necesidades
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+});
+
+routes.post("/newArbolControl", async (req, res) => {
+  try {
+    let arbol = req.body;
+    arbol.operacion = 1;
+    console.log(req.body);
+    // Verifica si los datos están presentes en req.body
+
+    const result = await arbolBL.insertArbolControl(arbol);
 
     // Maneja el resultado según tus necesidades
     res.json(result);

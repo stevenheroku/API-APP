@@ -1,10 +1,10 @@
 import { methods as loteDB } from "../dao/loteDB.js";
 import { methods as bitacoraDB } from "../dao/bitacoraDB.js";
 
-function searchLotes() {
+function searchLotes(idFinca) {
     return new Promise(async(resolve, reject) => {
         var mr;
-        var result = await loteDB.GetLote();
+        var result = await loteDB.GetLote(idFinca);
 
         try {
             if (result.recordset.length > 0) {

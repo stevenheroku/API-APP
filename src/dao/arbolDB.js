@@ -45,6 +45,41 @@ const registerArbol = async (objectRegister) => {
     }
   }
 
+  
+//STORE PROCEDURE
+const registerArbolControl = async (objectRegister) => {
+  try {
+    const pool = await getPool();
+
+    // Extraer los valores del objeto JSON
+    const {
+      CantidadIndividuos,
+      TipoEstacion,
+      TipoControl,
+      IdArbol,
+      IdPlaga_Enfermedad,
+      IdTipoEstructura
+    } = objectRegister;
+
+    const ArbolControlResult = await pool.request()
+      .input('pCantidadIndividuos', sql.Int, CantidadIndividuos)
+      .input('pTipoEstacion', sql.Int, TipoEstacion)
+      .input('pTipoControl', sql.Int, TipoControl)
+      .input('pIdArbol', sql.Int, IdArbol)
+      .input('pIdPlaga_Enfermedad', sql.Int, IdPlaga_Enfermedad)
+      .input('pIdTipoEstructura', sql.Int, IdTipoEstructura)
+      .execute('[dbo].[ADD_CONTROL_ARBOL]');
+
+    return ArbolControlResult;
+  } catch (error) {
+    console.error('Error al registrar el ArbolControl:', error);
+    const response = {
+      successful: false,
+      status: 500,
+      error: error.message
+  };
+  }
+}
 //obtener Arbol
 const GetArbol = async (idlote) => {
     const pool = await getPool(); 
@@ -55,6 +90,7 @@ const GetArbol = async (idlote) => {
             console.log("get:"+LoteResult);
     return new Promise((resolve, reject) => {
         resolve(LoteResult)
+        console.log("get2:"+LoteResult);
     })
 }
 
@@ -72,9 +108,41 @@ const deleteArbol = async (idArbol) => {
     })
 }
 
+
+//PLAGAS ARBOL
+const GetArbolPlagas = async (idArbol) => {
+  const pool = await getPool(); 
+      // Ejecutar el Stored Procedure
+      const ArbolPlagaResult = await pool.request()
+          .input('idArbol', sql.Int, idArbol)
+          .execute('[dbo].[GET_ARBOL_PLAGAS]');
+          console.log("get:"+ArbolPlagaResult);
+  return new Promise((resolve, reject) => {
+      resolve(ArbolPlagaResult)
+      console.log("get2:"+ArbolPlagaResult);
+  })
+}
+
+//ENFERMEDADES ARBOL
+const GetArbolEnfermedades = async (idArbol) => {
+  const pool = await getPool(); 
+      // Ejecutar el Stored Procedure
+      const ArbolEnfermedadResult = await pool.request()
+          .input('idArbol', sql.Int, idArbol)
+          .execute('[dbo].[GET_ARBOL_ENFERMEDADES]');
+          console.log("get:"+ArbolEnfermedadResult);
+  return new Promise((resolve, reject) => {
+      resolve(ArbolEnfermedadResult)
+      console.log("get2:"+ArbolEnfermedadResult);
+  })
+}
+
 export const methods =
 {
     GetArbol,
     registerArbol,
-    deleteArbol
+    deleteArbol,
+    registerArbolControl,
+    GetArbolPlagas,
+    GetArbolEnfermedades
 }

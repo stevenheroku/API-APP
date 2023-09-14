@@ -15,7 +15,19 @@ const GetFinca = async () => {
     })
 }
 
+const GetFincaEpl = async (idEmpleado) => {
+  const pool = await getPool(); 
+      // Ejecutar el Stored Procedure
+      const FincaEplResult = await pool.request()
+          .input('idEmpleado', sql.Int, idEmpleado)
+          .execute('[dbo].[GET_FINCA_EPL]');
+          console.log("get:"+FincaEplResult);
+  return new Promise((resolve, reject) => {
+      resolve(FincaEplResult)
+  })
+}
 export const methods =
 {
-  GetFinca
+  GetFinca,
+  GetFincaEpl
 }

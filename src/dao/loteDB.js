@@ -9,14 +9,15 @@ const registerLote = async (objectRegister) => {
   
       // Extraer los valores del objeto JSON
       const {
-        idLote,
-        IdEmpleado,
-        hectareasLote,
-        numeroArboles,
-        longitud,
-        latitud,
-        imagenLote,
-        idFinca
+        IdLote,
+        Empleado,
+        HectareasLote,
+        ArbolesControl,
+        Longitud,
+        Latitud,
+        ImagenLote,
+        IdFinca,
+        Identificador
       } = objectRegister;
       //var base64Data = imagenLote.replace(/^data:image\/\w+;base64,/, '');
 
@@ -26,14 +27,15 @@ const registerLote = async (objectRegister) => {
 
       // Ejecutar el Stored Procedure con los valores extraídos
       const LoteResult = await pool.request()
-        .input('idLote', sql.Int, idLote)
-        .input('pIdEmpleado', sql.Int, IdEmpleado)
-        .input('phectareasLote', sql.Float, hectareasLote)
-        .input('pnumeroArboles', sql.Int, numeroArboles)
-        .input('plongitud', sql.Float, longitud)
-        .input('platitud', sql.Float, latitud)
-        .input('pimagenLote', sql.NVarChar, imagenLote)
-        .input('pidFinca', sql.Int, idFinca)
+        .input('idLote', sql.Int, IdLote)
+        .input('pIdEmpleado', sql.Int, Empleado)
+        .input('pIdentificador', sql.Int, Identificador)
+        .input('phectareasLote', sql.Float, HectareasLote)
+        .input('pnumeroArboles', sql.Int, ArbolesControl)
+        .input('plongitud', sql.Float, Longitud)
+        .input('platitud', sql.Float, Latitud)
+        .input('pimagenLote', sql.NVarChar, ImagenLote)
+        .input('pidFinca', sql.Int, IdFinca)
         .execute('[dbo].[ADD_UPDATE_LOTES]');
   
   
@@ -49,12 +51,12 @@ const registerLote = async (objectRegister) => {
   }
 
 //obtener lote
-const GetLote = async () => {
+const GetLote = async (idFinca) => {
     const pool = await getPool(); 
         // Ejecutar el Stored Procedure
         const LoteResult = await pool.request()
-            .input('pIdLote', sql.Int, 0)
-            .execute('[dbo].[GET_LOTES]');
+            .input('idFinca', sql.Int, idFinca)
+            .execute('[dbo].[GET_LOTE]');
             console.log("get:"+LoteResult);
     return new Promise((resolve, reject) => {
         resolve(LoteResult)

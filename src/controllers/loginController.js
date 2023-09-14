@@ -7,7 +7,7 @@ const routes = express.Router();
 
 
 
-routes.get("/user", (req, res) => {
+routes.post("/user", (req, res) => {
   console.log("entro al controller");
   let userLogin = req.body;
   loginBL.loginUser(userLogin)

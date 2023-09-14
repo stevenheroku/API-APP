@@ -5,7 +5,7 @@ function searchArbol(idlote) {
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.GetArbol(idlote);
-
+        console.log(result.recordset)
         try {
             if (result.recordset.length > 0) {
                 mr = { state: 200, data: result.recordsets, message: "SUCCES" };
@@ -22,6 +22,7 @@ function searchArbol(idlote) {
         }
     })
 }
+
 
 function insertArbol(objectRegister) {
     const {
@@ -40,6 +41,47 @@ function insertArbol(objectRegister) {
                 mr = {
                     state: 204,
                     data: "El lote no existe",
+                    message: "ERROR",
+                };
+            }
+            else {
+                mr = {
+                    state: 204,
+                    data: "No se pudo insertar en la base de datos",
+                    message: "ERROR",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+
+    });
+}
+
+function insertArbolControl(objectRegister) {
+    const {
+        IdEmpleado
+    }=objectRegister;
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await arbolDB.registerArbolControl(objectRegister);
+        try {
+            if (result.recordset[0].ArbolControl>0) {
+                mr = { state: 200, data: [{ info: "ArbolControl Registrado con Éxito!", idArbol: result.recordsets }], message: "SUCCES" };
+                var json =  {"Descripcion": "se registró un nuevo árbolControl","IdEmpleado": IdEmpleado };
+                var data="Registro ÁrbolControl -> "+JSON.stringify(json)+""
+                await bitacoraDB.registerBitacora(data,IdEmpleado);
+            } else if(result.recordset[0].ArbolControl==-1){
+                mr = {
+                    state: 204,
+                    data: "Ya Ingreso esa estación para al Arbol!",
+                    message: "ERROR",
+                };
+            }else if(result.recordset[0].ArbolControl==-2){
+                mr = {
+                    state: 204,
+                    data: "El Árbol no Existe!",
                     message: "ERROR",
                 };
             }
@@ -111,10 +153,57 @@ function deleteArbol(IdEmpleado,idArbol) {
         }
     })
 }
+
+function searchArbolPlagas(idArbol) {
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await arbolDB.GetArbolPlagas(idArbol);
+        console.log(result.recordset)
+        try {
+            if (result.recordset[0].Valor> 0) {
+                mr = { state: 200, data: result.recordsets, message: "SUCCES" };
+            } else if(result.recordset[0].Valor==-1){
+                mr = {
+                    sstate: 404,
+                    data: "No existen elÁrbol!",
+                    message: "SUCCES",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+    })
+}
+
+function searchArbolEnfermedades(idArbol) {
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await arbolDB.GetArbolEnfermedades(idArbol);
+        console.log(result.recordset)
+        try {
+            if (result.recordset[0].Valor> 0) {
+                mr = { state: 200, data: result.recordsets, message: "SUCCES" };
+            } else if(result.recordset[0].Valor==-1){
+                mr = {
+                    sstate: 404,
+                    data: "No existen elÁrbol!",
+                    message: "SUCCES",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+    })
+}
 export const methods =
 {
     searchArbol,
     insertArbol,
     updatetArbol,
-    deleteArbol
+    deleteArbol,
+    insertArbolControl,
+    searchArbolEnfermedades,
+    searchArbolPlagas
 }

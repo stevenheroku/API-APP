@@ -6,17 +6,17 @@ function loginUser(datos) {
         var mr;
         var result = await loginDB.GetUser(datos);
         console.log("USUARIO: "+datos.Correo)
-        console.log(result.recordset[0].Valor)
+        console.log(result.recordset[0].Empleado)
 
         try {
-            if (result.recordset[0].Valor > 0) {
+            if (result.recordset[0].Empleado > 0) {
                 const token = jwt.sign(datos, 'stil');
-                mr = { state: 200, data: token, message: 'SUCCESS' }
+                mr = { state: 200, data: result.recordset[0], message: 'SUCCESS' }
                //mr = { state: 200, data: "Inicio de Sesión con Éxito!", message: "SUCCES" };
 
-            } else if(result.recordset[0].Valor =-1) {
+            } else if(result.recordset[0].Empleado =-1) {
                 mr = {
-                    sstate: 404,
+                    state: 404,
                     data: "Credenciales Incorrectas!",
                     message: "ERROR",
                 };

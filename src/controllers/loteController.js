@@ -19,10 +19,12 @@ const getLotes = async (req, res) => {
     });
 };
 
-routes.get("/lote", (req, res) => {
+routes.get("/lote/:idFinca", (req, res) => {
+  let idFinca = req.params['idFinca'];
+
   console.log("entro al controller");
   loteBL
-    .searchLotes()
+    .searchLotes(idFinca)
     .then((result) => {
       res.json(result);
     })
