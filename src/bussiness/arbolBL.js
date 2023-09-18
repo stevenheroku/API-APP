@@ -37,7 +37,13 @@ function insertArbol(objectRegister) {
                 var json =  {"Descripcion": "se registró un nuevo árbol","IdEmpleado": IdEmpleado };
                 var data="Registro Árbol -> "+JSON.stringify(json)+""
                 await bitacoraDB.registerBitacora(data,IdEmpleado);
-            } else if(result.recordset[0].Arbol==-1){
+            } else if(result.recordset[0].Arbol==-2){
+                mr = {
+                    state: 204,
+                    data: "El Identificador del Árbol ya Existe!",
+                    message: "ERROR",
+                };
+            }else if(result.recordset[0].Arbol==-1){
                 mr = {
                     state: 204,
                     data: "El lote no existe",
@@ -197,6 +203,28 @@ function searchArbolEnfermedades(idArbol) {
         }
     })
 }
+
+function searchArbolDetalle(idArbol) {
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await arbolDB.GetArbolDetalle(idArbol);
+        console.log(result.recordset)
+        try {
+            if (result.recordset[0].Valor> 0) {
+                mr = { state: 200, data: result.recordsets, message: "SUCCES" };
+            } else if(result.recordset[0].Valor==-1){
+                mr = {
+                    sstate: 404,
+                    data: "No existen elÁrbol!",
+                    message: "SUCCES",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+    })
+}
 export const methods =
 {
     searchArbol,
@@ -205,5 +233,6 @@ export const methods =
     deleteArbol,
     insertArbolControl,
     searchArbolEnfermedades,
-    searchArbolPlagas
+    searchArbolPlagas,
+    searchArbolDetalle
 }

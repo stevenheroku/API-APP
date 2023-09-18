@@ -20,11 +20,23 @@ routes.post("/user", (req, res) => {
     });
 });
 
+routes.put("/userUpdatePass", (req, res) => {
+  console.log("entro al controller");
+  let userLogin = req.body;
+  loginBL.updatePassUser(userLogin)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
 routes.post("/newUserEpl", async (req, res) => {
   try {
     let user_epl = req.body;
     user_epl.operacion = 1;
-    console.log(req.body);
+    console.log(user_epl);
     const result = await loginBL.insertUser_Epl(user_epl);
 
     // Maneja el resultado según tus necesidades

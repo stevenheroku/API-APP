@@ -31,12 +31,18 @@ function insertLote(objectRegister) {
         var mr;
         var result = await loteDB.registerLote(objectRegister);
         try {
-            if (result) {
+            if (result.recordset[0].Lote>0) {
                 mr = { state: 200, data: [{ info: "Lote Registrado con Éxito!", idLote: result.recordsets }], message: "SUCCES" };
                 var json =  {"Descripcion": "se registró un nuevo lote","IdEmpleado": IdEmpleado };
                 var data="Registro Lote -> "+JSON.stringify(json)+""
                 await bitacoraDB.registerBitacora(data,IdEmpleado);
-            } else {
+            } else if(result.recordset[0].Lote==-1){
+                mr = {
+                    state: 204,
+                    data: "El Identificador del Lote ya Existe!",
+                    message: "ERROR",
+                };
+            }else {
                 mr = {
                     state: 204,
                     data: "No se pudo insertar en la base de datos",

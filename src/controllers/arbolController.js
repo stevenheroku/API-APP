@@ -47,7 +47,19 @@ routes.get("/arbolEnfermedades/:idArbol", (req, res) => {
       res.json(error);
     });
 });
+routes.get("/arbolDetalle/:idArbol", (req, res) => {
+  let idArbol = req.params['idArbol'];
 
+  console.log("entro al controller");
+  arbolBL.searchArbolDetalle(idArbol)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
 routes.post("/newArbol", async (req, res) => {
   try {
     let arbol = req.body;
