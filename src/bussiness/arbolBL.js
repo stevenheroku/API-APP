@@ -1,10 +1,10 @@
 import { methods as arbolDB } from "../dao/arbolDB.js";
 import { methods as bitacoraDB } from "../dao/bitacoraDB.js";
 
-function searchArbol(idlote) {
+function searchArbolLote(idlote) {
     return new Promise(async(resolve, reject) => {
         var mr;
-        var result = await arbolDB.GetArbol(idlote);
+        var result = await arbolDB.GetArbolLotes(idlote);
         console.log(result.recordset)
         try {
             if (result.recordset.length > 0) {
@@ -24,6 +24,27 @@ function searchArbol(idlote) {
 }
 
 
+function searchArbol(idArbol) {
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await arbolDB.GetArbol(idArbol);
+        console.log(result.recordset)
+        try {
+            if (result.recordset.length > 0) {
+                mr = { state: 200, data: result.recordsets, message: "SUCCES" };
+            } else {
+                mr = {
+                    sstate: 404,
+                    data: "No se pudo Obtener el Árbol.",
+                    message: "SUCCES",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+    })
+}
 function insertArbol(objectRegister) {
     const {
         IdEmpleado
@@ -227,12 +248,13 @@ function searchArbolDetalle(idArbol) {
 }
 export const methods =
 {
-    searchArbol,
+    searchArbolLote,
     insertArbol,
     updatetArbol,
     deleteArbol,
     insertArbolControl,
     searchArbolEnfermedades,
     searchArbolPlagas,
-    searchArbolDetalle
+    searchArbolDetalle,
+    searchArbol
 }

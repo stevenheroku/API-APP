@@ -41,14 +41,14 @@ function updatePassUser(datos) {
                 mr = { state: 200, data: result.recordset[0], message: 'SUCCESS' }
                //mr = { state: 200, data: "Inicio de Sesión con Éxito!", message: "SUCCES" };
 
-            } else if(result.recordset[0].Usuario =-1) {
+            } else if(result.recordset[0].Usuario ==-1) {
                 mr = {
                     state: 404,
                     data: "La contraseña debe ser diferente a la actual!",
                     message: "ERROR",
                 };
             }
-            else if(result.recordset[0].Usuario =-2) {
+            else if(result.recordset[0].Usuario ==-2) {
                 mr = {
                     state: 404,
                     data: "El correo no existe!",

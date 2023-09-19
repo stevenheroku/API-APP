@@ -7,8 +7,22 @@ const routes = express.Router();
 
 
 
-routes.get("/arbol/:idLote", (req, res) => {
+routes.get("/arbolLote/:idLote", (req, res) => {
   let idLote = req.params['idLote'];
+
+  console.log("entro al controller");
+  arbolBL.searchArbolLote(idLote)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
+
+routes.get("/arbol/:idArbol", (req, res) => {
+  let idLote = req.params['idArbol'];
 
   console.log("entro al controller");
   arbolBL.searchArbol(idLote)
@@ -20,7 +34,6 @@ routes.get("/arbol/:idLote", (req, res) => {
       res.json(error);
     });
 });
-
 routes.get("/arbolPlagas/:idArbol", (req, res) => {
   let idArbol = req.params['idArbol'];
 

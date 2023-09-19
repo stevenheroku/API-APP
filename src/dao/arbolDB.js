@@ -9,31 +9,31 @@ const registerArbol = async (objectRegister) => {
   
       // Extraer los valores del objeto JSON
       const {
-        idArbol,
-        IdEmpleado,
-        identificadorArbol,
-        longitud,
-        latitud,
-        imagenArbol,
-        idLote
+        IdArbol,
+        Empleado,
+        IdentificadorArbol,
+        Longitud,
+        Latitud,
+        ImagenArbol,
+        IdLote
       } = objectRegister;
       //var base64Data = imagenLote.replace(/^data:image\/\w+;base64,/, '');
 
         // Decodificar la cadena Base64 en un arreglo de bytes
         //const buffer = Buffer.from(base64Data, 'base64');
 
-
+        console.log("ENTRO A CREAR ARBOL")
       // Ejecutar el Stored Procedure con los valores extraídos
       const LoteResult = await pool.request()
-        .input('pidArbol', sql.Int, idArbol)
-        .input('pIdEmpleado', sql.Int, IdEmpleado)
-        .input('pidentificadorArbol', sql.Int, identificadorArbol)
-        .input('plongitud', sql.Float, longitud)
-        .input('platitud', sql.Float, latitud)
-        .input('pimagenArbol', sql.NVarChar, imagenArbol)
-        .input('pidLote', sql.Int, idLote)
+        .input('pidArbol', sql.Int, IdArbol)
+        .input('pIdEmpleado', sql.Int, Empleado)
+        .input('pidentificadorArbol', sql.Int, IdentificadorArbol)
+        .input('plongitud', sql.NVarChar, Longitud)
+        .input('platitud', sql.NVarChar, Latitud)
+        .input('pimagenArbol', sql.NVarChar, ImagenArbol)
+        .input('pidLote', sql.Int, IdLote)
         .execute('[dbo].[ADD_UPDATE_ARBOL_LOTES]');
-  
+      
       return LoteResult;
     } catch (error) {
       console.error('Error al registrar el Arbol:', error);
@@ -80,20 +80,33 @@ const registerArbolControl = async (objectRegister) => {
   };
   }
 }
-//obtener Arbol
-const GetArbol = async (idlote) => {
+//obtener Arboles de un lote
+const GetArbolLotes = async (idlote) => {
     const pool = await getPool(); 
         // Ejecutar el Stored Procedure
-        const LoteResult = await pool.request()
+        const ArbolLoteResult = await pool.request()
             .input('idLote', sql.Int, idlote)
             .execute('[dbo].[GET_ARBOL_LOTE]');
-            console.log("get:"+LoteResult);
+            console.log("get:"+ArbolLoteResult);
     return new Promise((resolve, reject) => {
-        resolve(LoteResult)
-        console.log("get2:"+LoteResult);
+        resolve(ArbolLoteResult)
+        console.log("get2:"+ArbolLoteResult);
     })
 }
 
+//obtener Arboles de un lote
+const GetArbol = async (idArbol) => {
+  const pool = await getPool(); 
+      // Ejecutar el Stored Procedure
+      const ArbolResult = await pool.request()
+          .input('idArbol', sql.Int, idArbol)
+          .execute('[dbo].[GET_ARBOL]');
+          console.log("get:"+ArbolResult);
+  return new Promise((resolve, reject) => {
+      resolve(ArbolResult)
+      console.log("get2:"+ArbolResult);
+  })
+}
 const deleteArbol = async (idArbol) => {
     const pool = await getPool(); 
 
@@ -151,6 +164,7 @@ const GetArbolDetalle = async (idArbol) => {
 }
 export const methods =
 {
+  GetArbolLotes,
     GetArbol,
     registerArbol,
     deleteArbol,
