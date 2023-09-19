@@ -19,12 +19,12 @@ const getLotes = async (req, res) => {
     });
 };
 
-routes.get("/lote/:idFinca", (req, res) => {
+routes.get("/lotefinca/:idFinca", (req, res) => {
   let idFinca = req.params['idFinca'];
 
   console.log("entro al controller");
   loteBL
-    .searchLotes(idFinca)
+    .searchLotesFinca(idFinca)
     .then((result) => {
       res.json(result);
     })
@@ -34,6 +34,20 @@ routes.get("/lote/:idFinca", (req, res) => {
     });
 });
 
+routes.get("/lote/:idLote", (req, res) => {
+  let idLote = req.params['idLote'];
+
+  console.log("entro al controller");
+  loteBL
+    .searchLote(idLote)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
 routes.post("/newLote", async (req, res) => {
   try {
     let lote = req.body;

@@ -192,7 +192,7 @@ function searchArbolPlagas(idArbol) {
             } else if(result.recordset[0].Valor==-1){
                 mr = {
                     sstate: 404,
-                    data: "No existen elÁrbol!",
+                    data: "No existen Plagas de Árbol!",
                     message: "SUCCES",
                 };
             }
@@ -214,7 +214,7 @@ function searchArbolEnfermedades(idArbol) {
             } else if(result.recordset[0].Valor==-1){
                 mr = {
                     sstate: 404,
-                    data: "No existen elÁrbol!",
+                    data: "No existen Enfermedades del Árbol!",
                     message: "SUCCES",
                 };
             }

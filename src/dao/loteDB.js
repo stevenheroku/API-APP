@@ -51,18 +51,29 @@ const registerLote = async (objectRegister) => {
   }
 
 //obtener lote
-const GetLote = async (idFinca) => {
+const GetLotesFinca = async (idFinca) => {
     const pool = await getPool(); 
         // Ejecutar el Stored Procedure
         const LoteResult = await pool.request()
             .input('idFinca', sql.Int, idFinca)
-            .execute('[dbo].[GET_LOTE]');
+            .execute('[dbo].[GET_LOTES_FINCA]');
             console.log("get:"+LoteResult);
     return new Promise((resolve, reject) => {
         resolve(LoteResult)
     })
 }
 
+const GetLote = async (idFinca) => {
+  const pool = await getPool(); 
+      // Ejecutar el Stored Procedure
+      const LoteResult = await pool.request()
+          .input('idLote', sql.Int, idFinca)
+          .execute('[dbo].[GET_LOTES]');
+          console.log("get:"+LoteResult);
+  return new Promise((resolve, reject) => {
+      resolve(LoteResult)
+  })
+}
 const deleteLote = async (idLote) => {
     const pool = await getPool(); 
 
@@ -79,7 +90,8 @@ const deleteLote = async (idLote) => {
 
 export const methods =
 {
-    GetLote,
+  GetLotesFinca,
     registerLote,
-    deleteLote
+    deleteLote,
+    GetLote
 }

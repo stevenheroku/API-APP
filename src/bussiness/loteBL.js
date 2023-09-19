@@ -1,10 +1,32 @@
 import { methods as loteDB } from "../dao/loteDB.js";
 import { methods as bitacoraDB } from "../dao/bitacoraDB.js";
 
-function searchLotes(idFinca) {
+function searchLotesFinca(idFinca) {
     return new Promise(async(resolve, reject) => {
         var mr;
-        var result = await loteDB.GetLote(idFinca);
+        var result = await loteDB.GetLotesFinca(idFinca);
+
+        try {
+            if (result.recordset.length > 0) {
+                mr = { state: 200, data: result.recordsets, message: "SUCCES" };
+            } else {
+                mr = {
+                    state: 404,
+                    data: "No Existe Ningun Lote Creado.",
+                    message: "Error",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+    })
+}
+
+function searchLote(idLote) {
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await loteDB.GetLote(idLote);
 
         try {
             if (result.recordset.length > 0) {
@@ -112,7 +134,8 @@ function deleteLote(IdEmpleado,idLote) {
 }
 export const methods =
 {
-    searchLotes,
+    searchLotesFinca,
+    searchLote,
     insertLote,
     updatetLote,
     deleteLote
