@@ -123,11 +123,12 @@ const deleteArbol = async (idArbol) => {
 
 
 //PLAGAS ARBOL
-const GetArbolPlagas = async (idArbol) => {
+const GetArbolPlagas = async (idArbol,fecha) => {
   const pool = await getPool(); 
       // Ejecutar el Stored Procedure
       const ArbolPlagaResult = await pool.request()
           .input('idArbol', sql.Int, idArbol)
+          .input('FechaControl', sql.NVarChar, fecha)
           .execute('[dbo].[GET_ARBOL_PLAGAS]');
           console.log("get:"+ArbolPlagaResult);
   return new Promise((resolve, reject) => {
@@ -137,11 +138,12 @@ const GetArbolPlagas = async (idArbol) => {
 }
 
 //ENFERMEDADES ARBOL
-const GetArbolEnfermedades = async (idArbol) => {
+const GetArbolEnfermedades = async (idArbol,fecha) => {
   const pool = await getPool(); 
       // Ejecutar el Stored Procedure
       const ArbolEnfermedadResult = await pool.request()
           .input('idArbol', sql.Int, idArbol)
+          .input('FechaControl', sql.NVarChar, fecha)
           .execute('[dbo].[GET_ARBOL_ENFERMEDADES]');
           console.log("get:"+ArbolEnfermedadResult);
   return new Promise((resolve, reject) => {
@@ -162,6 +164,20 @@ const GetArbolDetalle = async (idArbol) => {
       console.log("get2:"+ArbolDetalleResult);
   })
 }
+
+
+const GetArbolControlBitacora = async (idArbol) => {
+  const pool = await getPool(); 
+      // Ejecutar el Stored Procedure
+      const ArbolControlBitacora = await pool.request()
+          .input('idArbol', sql.Int, idArbol)
+          .execute('[dbo].[GET_DIAS_CONTROL_ARBOL]');
+          console.log("get:"+ArbolControlBitacora.Label);
+  return new Promise((resolve, reject) => {
+      resolve(ArbolControlBitacora)
+      console.log("get2:"+ArbolControlBitacora.Label);
+  })
+}
 export const methods =
 {
   GetArbolLotes,
@@ -171,5 +187,6 @@ export const methods =
     registerArbolControl,
     GetArbolPlagas,
     GetArbolEnfermedades,
-    GetArbolDetalle
+    GetArbolDetalle,
+    GetArbolControlBitacora
 }

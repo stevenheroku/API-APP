@@ -181,10 +181,10 @@ function deleteArbol(IdEmpleado,idArbol) {
     })
 }
 
-function searchArbolPlagas(idArbol) {
+function searchArbolPlagas(idArbol,fecha) {
     return new Promise(async(resolve, reject) => {
         var mr;
-        var result = await arbolDB.GetArbolPlagas(idArbol);
+        var result = await arbolDB.GetArbolPlagas(idArbol,fecha);
         console.log(result.recordset)
         try {
             if (result.recordset[0].Valor> 0) {
@@ -203,10 +203,10 @@ function searchArbolPlagas(idArbol) {
     })
 }
 
-function searchArbolEnfermedades(idArbol) {
+function searchArbolEnfermedades(idArbol,fecha) {
     return new Promise(async(resolve, reject) => {
         var mr;
-        var result = await arbolDB.GetArbolEnfermedades(idArbol);
+        var result = await arbolDB.GetArbolEnfermedades(idArbol,fecha);
         console.log(result.recordset)
         try {
             if (result.recordset[0].Valor> 0) {
@@ -215,6 +215,28 @@ function searchArbolEnfermedades(idArbol) {
                 mr = {
                     sstate: 404,
                     data: "No existen Enfermedades del Árbol!",
+                    message: "SUCCES",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+    })
+}
+
+function searchArbolBitacora(idArbol) {
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await arbolDB.GetArbolControlBitacora(idArbol);
+        console.log(result.recordset)
+        try {
+            if (result.recordset[0].Valor> 0) {
+                mr = { state: 200, data: result.recordsets, message: "SUCCES" };
+            } else if(result.recordset[0].Valor==-1){
+                mr = {
+                    sstate: 404,
+                    data: "No existen Control del Árbol!",
                     message: "SUCCES",
                 };
             }
@@ -256,5 +278,6 @@ export const methods =
     searchArbolEnfermedades,
     searchArbolPlagas,
     searchArbolDetalle,
-    searchArbol
+    searchArbol,
+    searchArbolBitacora
 }

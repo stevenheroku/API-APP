@@ -57,7 +57,7 @@ const GetLotesFinca = async (idFinca) => {
         const LoteResult = await pool.request()
             .input('idFinca', sql.Int, idFinca)
             .execute('[dbo].[GET_LOTES_FINCA]');
-            console.log("get:"+LoteResult);
+            //console.log("get:"+LoteResult);
     return new Promise((resolve, reject) => {
         resolve(LoteResult)
     })

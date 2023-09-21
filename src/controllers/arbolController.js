@@ -34,11 +34,12 @@ routes.get("/arbol/:idArbol", (req, res) => {
       res.json(error);
     });
 });
-routes.get("/arbolPlagas/:idArbol", (req, res) => {
+routes.get("/arbolPlagas/:idArbol/:fecha", (req, res) => {
   let idArbol = req.params['idArbol'];
+  let fecha = req.params['fecha'];
 
-  console.log("entro al controller");
-  arbolBL.searchArbolPlagas(idArbol)
+  console.log("fecha:"+fecha);
+  arbolBL.searchArbolPlagas(idArbol,fecha)
     .then((result) => {
       res.json(result);
     })
@@ -47,11 +48,13 @@ routes.get("/arbolPlagas/:idArbol", (req, res) => {
       res.json(error);
     });
 });
-routes.get("/arbolEnfermedades/:idArbol", (req, res) => {
-  let idArbol = req.params['idArbol'];
 
-  console.log("entro al controller");
-  arbolBL.searchArbolEnfermedades(idArbol)
+
+routes.get("/arbolEnfermedades/:idArbol/:fecha", (req, res) => {
+  let idArbol = req.params['idArbol'];
+  let fecha = req.params['fecha'];
+  console.log("fecha:"+fecha);
+  arbolBL.searchArbolEnfermedades(idArbol,fecha)
     .then((result) => {
       res.json(result);
     })
@@ -60,6 +63,22 @@ routes.get("/arbolEnfermedades/:idArbol", (req, res) => {
       res.json(error);
     });
 });
+
+routes.get("/arbolControlBitacora/:idArbol", (req, res) => {
+  let idArbol = req.params['idArbol'];
+
+  console.log("entro al controller");
+  arbolBL.searchArbolBitacora(idArbol)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
+
+
 routes.get("/arbolDetalle/:idArbol", (req, res) => {
   let idArbol = req.params['idArbol'];
 
