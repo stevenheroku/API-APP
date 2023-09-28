@@ -63,6 +63,29 @@ const GetLotesFinca = async (idFinca) => {
     })
 }
 
+const GetLotesFincaGrafica = async (idFinca) => {
+  const pool = await getPool(); 
+      // Ejecutar el Stored Procedure
+      const LoteResult = await pool.request()
+          .input('idFinca', sql.Int, idFinca)
+          .execute('[dbo].[GET_LOTES_GRAFICA]');
+          //console.log("get:"+LoteResult);
+  return new Promise((resolve, reject) => {
+      resolve(LoteResult)
+  })
+}
+
+const GetLotesFincaReporteBasico = async (idFinca) => {
+  const pool = await getPool(); 
+      // Ejecutar el Stored Procedure
+      const LoteResult = await pool.request()
+          .input('idFinca', sql.Int, idFinca)
+          .execute('[dbo].[GET_LOTES_REPORTEBASICO]');
+          //console.log("get:"+LoteResult);
+  return new Promise((resolve, reject) => {
+      resolve(LoteResult)
+  })
+}
 const GetLote = async (idFinca) => {
   const pool = await getPool(); 
       // Ejecutar el Stored Procedure
@@ -93,5 +116,7 @@ export const methods =
   GetLotesFinca,
     registerLote,
     deleteLote,
-    GetLote
+    GetLote,
+    GetLotesFincaGrafica,
+    GetLotesFincaReporteBasico
 }

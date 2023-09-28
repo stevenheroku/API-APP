@@ -22,6 +22,49 @@ function searchLotesFinca(idFinca) {
         }
     })
 }
+function searchLotesFincaGrafica(idFinca) {
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await loteDB.GetLotesFincaGrafica(idFinca);
+
+        try {
+            if (result.recordset.length > 0) {
+                mr = { state: 200, data: result.recordsets, message: "SUCCES" };
+            } else {
+                mr = {
+                    state: 404,
+                    data: "No Existe Ningun Lote Creado.",
+                    message: "Error",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+    })
+}
+
+function searchLotesFincaReporteBasico(idFinca) {
+    return new Promise(async(resolve, reject) => {
+        var mr;
+        var result = await loteDB.GetLotesFincaReporteBasico(idFinca);
+
+        try {
+            if (result.recordset.length > 0) {
+                mr = { state: 200, data: result.recordsets, message: "SUCCES" };
+            } else {
+                mr = {
+                    state: 404,
+                    data: "No Existe Ningun Lote Creado.",
+                    message: "Error",
+                };
+            }
+            resolve(mr);
+        } catch (error) {
+            reject({ state: 500, message: new String(error) });
+        }
+    })
+}
 
 function searchLote(idLote) {
     return new Promise(async(resolve, reject) => {
@@ -138,5 +181,7 @@ export const methods =
     searchLote,
     insertLote,
     updatetLote,
-    deleteLote
+    deleteLote,
+    searchLotesFincaGrafica,
+    searchLotesFincaReporteBasico
 }

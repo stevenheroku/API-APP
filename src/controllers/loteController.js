@@ -34,6 +34,36 @@ routes.get("/lotefinca/:idFinca", (req, res) => {
     });
 });
 
+routes.get("/lotefincaGrafica/:idFinca", (req, res) => {
+  let idFinca = req.params['idFinca'];
+
+  console.log("entro al controller");
+  loteBL
+    .searchLotesFincaGrafica(idFinca)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
+
+routes.get("/lotefincaReporte/:idFinca", (req, res) => {
+  let idFinca = req.params['idFinca'];
+
+  console.log("entro al controller");
+  loteBL
+    .searchLotesFincaReporteBasico(idFinca)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.json(error);
+    });
+});
+
 routes.get("/lote/:idLote", (req, res) => {
   let idLote = req.params['idLote'];
 
