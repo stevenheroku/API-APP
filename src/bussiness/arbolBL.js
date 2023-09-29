@@ -5,7 +5,6 @@ function searchArbolLote(idlote) {
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.GetArbolLotes(idlote);
-        console.log(result.recordset)
         try {
             if (result.recordset.length > 0) {
                 mr = { state: 200, data: result.recordsets, message: "SUCCES" };
@@ -28,7 +27,6 @@ function searchArbol(idArbol) {
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.GetArbol(idArbol);
-        console.log(result.recordset)
         try {
             if (result.recordset.length > 0) {
                 mr = { state: 200, data: result.recordsets, message: "SUCCES" };
@@ -251,7 +249,6 @@ function searchArbolDetalle(idArbol) {
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.GetArbolDetalle(idArbol);
-        console.log(result.recordset)
         try {
             if (result.recordset[0].Valor> 0) {
                 mr = { state: 200, data: result.recordsets, message: "SUCCES" };

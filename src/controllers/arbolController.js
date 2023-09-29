@@ -96,7 +96,6 @@ routes.post("/newArbol", async (req, res) => {
   try {
     let arbol = req.body;
     arbol.operacion = 1;
-    console.log(req.body);
     // Verifica si los datos están presentes en req.body
 
     const result = await arbolBL.insertArbol(arbol);
@@ -113,7 +112,6 @@ routes.post("/newArbolControl", async (req, res) => {
   try {
     let arbol = req.body;
     arbol.operacion = 1;
-    console.log(req.body);
     // Verifica si los datos están presentes en req.body
 
     const result = await arbolBL.insertArbolControl(arbol);
@@ -130,7 +128,6 @@ routes.put("/updateArbol", async (req, res) => {
   try {
     let lote = req.body;
     lote.operacion = 2;
-    console.log(req.body);
     // Verifica si los datos están presentes en req.body
 
     const result = await arbolBL.updatetArbol(lote);

@@ -82,7 +82,6 @@ routes.post("/newLote", async (req, res) => {
   try {
     let lote = req.body;
     lote.operacion = 1;
-    console.log(req.body);
     // Verifica si los datos están presentes en req.body
 
     const result = await loteBL.insertLote(lote);
@@ -99,7 +98,6 @@ routes.put("/updateLote", async (req, res) => {
   try {
     let lote = req.body;
     lote.operacion = 2;
-    console.log(req.body);
     // Verifica si los datos están presentes en req.body
 
     const result = await loteBL.updatetLote(lote);

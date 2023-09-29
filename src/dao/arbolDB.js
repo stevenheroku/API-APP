@@ -90,7 +90,6 @@ const GetArbolLotes = async (idlote) => {
             console.log("get:"+ArbolLoteResult);
     return new Promise((resolve, reject) => {
         resolve(ArbolLoteResult)
-        console.log("get2:"+ArbolLoteResult);
     })
 }
 
@@ -104,7 +103,6 @@ const GetArbol = async (idArbol) => {
           console.log("get:"+ArbolResult);
   return new Promise((resolve, reject) => {
       resolve(ArbolResult)
-      console.log("get2:"+ArbolResult);
   })
 }
 const deleteArbol = async (idArbol) => {
@@ -133,7 +131,6 @@ const GetArbolPlagas = async (idArbol,fecha) => {
           console.log("get:"+ArbolPlagaResult);
   return new Promise((resolve, reject) => {
       resolve(ArbolPlagaResult)
-      console.log("get2:"+ArbolPlagaResult);
   })
 }
 
@@ -148,7 +145,6 @@ const GetArbolEnfermedades = async (idArbol,fecha) => {
           console.log("get:"+ArbolEnfermedadResult);
   return new Promise((resolve, reject) => {
       resolve(ArbolEnfermedadResult)
-      console.log("get2:"+ArbolEnfermedadResult);
   })
 }
 
@@ -161,7 +157,6 @@ const GetArbolDetalle = async (idArbol) => {
           console.log("get:"+ArbolDetalleResult);
   return new Promise((resolve, reject) => {
       resolve(ArbolDetalleResult)
-      console.log("get2:"+ArbolDetalleResult);
   })
 }
 
@@ -175,7 +170,6 @@ const GetArbolControlBitacora = async (idArbol) => {
           console.log("get:"+ArbolControlBitacora.Label);
   return new Promise((resolve, reject) => {
       resolve(ArbolControlBitacora)
-      console.log("get2:"+ArbolControlBitacora.Label);
   })
 }
 export const methods =

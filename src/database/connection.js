@@ -20,6 +20,16 @@ const dbsettings ={
     trustServerCertificate: true // change to true for local dev / self-signed certs
   }
 };
+/*const dbsettings ={
+  user:"jsrodriguezr",
+  password:"jsrr.2023",
+  server:"appcontrolplagas.database.windows.net",
+  database:"app_control",
+  options: {
+    encrypt: true, // for azure
+    trustServerCertificate: true // change to true for local dev / self-signed certs
+  }
+};*/
 async function getPool() {
   try {
     const pool = await sql.connect(dbsettings);
