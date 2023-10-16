@@ -8,7 +8,6 @@ const routes = express.Router();
 
 
 routes.get("/enfermedad", (req, res) => {
-  console.log("entro al controller");
   enfermedadesBL.getEnfermedades()
     .then((result) => {
       res.json(result);

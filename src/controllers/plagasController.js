@@ -5,7 +5,6 @@ const routes = express.Router();
 
 
 routes.get("/plaga", (req, res) => {
-  console.log("entro al controller");
   plagasBL.getPlagas()
     .then((result) => {
       res.json(result);

@@ -10,7 +10,6 @@ const routes = express.Router();
 routes.get("/arbolLote/:idLote", (req, res) => {
   let idLote = req.params['idLote'];
 
-  console.log("entro al controller");
   arbolBL.searchArbolLote(idLote)
     .then((result) => {
       res.json(result);
@@ -24,7 +23,6 @@ routes.get("/arbolLote/:idLote", (req, res) => {
 routes.get("/arbol/:idArbol", (req, res) => {
   let idLote = req.params['idArbol'];
 
-  console.log("entro al controller");
   arbolBL.searchArbol(idLote)
     .then((result) => {
       res.json(result);
@@ -38,7 +36,6 @@ routes.get("/arbolPlagas/:idArbol/:fecha", (req, res) => {
   let idArbol = req.params['idArbol'];
   let fecha = req.params['fecha'];
 
-  console.log("fecha:"+fecha);
   arbolBL.searchArbolPlagas(idArbol,fecha)
     .then((result) => {
       res.json(result);
@@ -53,7 +50,6 @@ routes.get("/arbolPlagas/:idArbol/:fecha", (req, res) => {
 routes.get("/arbolEnfermedades/:idArbol/:fecha", (req, res) => {
   let idArbol = req.params['idArbol'];
   let fecha = req.params['fecha'];
-  console.log("fecha:"+fecha);
   arbolBL.searchArbolEnfermedades(idArbol,fecha)
     .then((result) => {
       res.json(result);
@@ -67,7 +63,6 @@ routes.get("/arbolEnfermedades/:idArbol/:fecha", (req, res) => {
 routes.get("/arbolControlBitacora/:idArbol", (req, res) => {
   let idArbol = req.params['idArbol'];
 
-  console.log("entro al controller");
   arbolBL.searchArbolBitacora(idArbol)
     .then((result) => {
       res.json(result);
@@ -82,7 +77,6 @@ routes.get("/arbolControlBitacora/:idArbol", (req, res) => {
 routes.get("/arbolDetalle/:idArbol", (req, res) => {
   let idArbol = req.params['idArbol'];
 
-  console.log("entro al controller");
   arbolBL.searchArbolDetalle(idArbol)
     .then((result) => {
       res.json(result);
@@ -143,8 +137,6 @@ routes.put("/updateArbol", async (req, res) => {
 routes.delete('/deleteArbol/:idEmpleado/:idArbol', (req, res) => {
     let idLote = req.params['idArbol'];
     let idEmpleado = req.params['idEmpleado'];
-    console.log("entro controller");
-    console.log("idArbol:"+idLote);
     arbolBL.deleteArbol(idEmpleado,idLote).then(result => {
         res.json(result)
     }).catch(error => {

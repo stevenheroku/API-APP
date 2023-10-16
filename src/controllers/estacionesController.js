@@ -8,7 +8,6 @@ const routes = express.Router();
 
 
 routes.get("/estacion", (req, res) => {
-  console.log("entro al controller");
   estacionesBL.getEstaciones()
     .then((result) => {
       res.json(result);

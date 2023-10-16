@@ -183,7 +183,6 @@ function searchArbolPlagas(idArbol,fecha) {
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.GetArbolPlagas(idArbol,fecha);
-        console.log(result.recordset)
         try {
             if (result.recordset[0].Valor> 0) {
                 mr = { state: 200, data: result.recordsets, message: "SUCCES" };
@@ -205,7 +204,6 @@ function searchArbolEnfermedades(idArbol,fecha) {
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.GetArbolEnfermedades(idArbol,fecha);
-        console.log(result.recordset)
         try {
             if (result.recordset[0].Valor> 0) {
                 mr = { state: 200, data: result.recordsets, message: "SUCCES" };
@@ -227,7 +225,6 @@ function searchArbolBitacora(idArbol) {
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.GetArbolControlBitacora(idArbol);
-        console.log(result.recordset)
         try {
             if (result.recordset[0].Valor> 0) {
                 mr = { state: 200, data: result.recordsets, message: "SUCCES" };
@@ -249,13 +246,14 @@ function searchArbolDetalle(idArbol) {
     return new Promise(async(resolve, reject) => {
         var mr;
         var result = await arbolDB.GetArbolDetalle(idArbol);
+        console.log(result.recordset[0].Valor)
         try {
             if (result.recordset[0].Valor> 0) {
                 mr = { state: 200, data: result.recordsets, message: "SUCCES" };
             } else if(result.recordset[0].Valor==-1){
                 mr = {
                     sstate: 404,
-                    data: "No existen elÁrbol!",
+                    data: "No existen el Árbol!",
                     message: "SUCCES",
                 };
             }

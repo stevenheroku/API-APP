@@ -7,7 +7,6 @@ const GetEnfermedades = async () => {
       // Ejecutar el Stored Procedure
       const enfermedadResult = await pool.request()
           .execute('[dbo].[GET_ENFERMEDADES]');
-          console.log("get:"+enfermedadResult);
   return new Promise((resolve, reject) => {
       resolve(enfermedadResult)
   })

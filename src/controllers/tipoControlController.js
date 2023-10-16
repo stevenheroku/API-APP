@@ -8,7 +8,6 @@ const routes = express.Router();
 
 
 routes.get("/tipoControl", (req, res) => {
-  console.log("entro al controller");
   tipoControlBL.getTipoControl()
     .then((result) => {
       res.json(result);

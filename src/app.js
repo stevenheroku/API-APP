@@ -26,7 +26,7 @@ app.use(express.json({ limit: '1024mb' }));
 app.use(express.urlencoded({ extended: false }));
 // Configurar opciones de CORS (ajusta esto según tus necesidades)
 const corsOptions = {
-    origin: 'http://192.168.1.9:4200', // Permitir solicitudes solo desde este origen
+    origin: 'https://192.168.1.9:4200', // Permitir solicitudes solo desde este origen
     methods: 'GET,PUT,POST,DELETE', // Métodos HTTP permitidos
   };
 app.use(cors(corsOptions));
