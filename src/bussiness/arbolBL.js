@@ -56,7 +56,7 @@ function insertArbol(objectRegister) {
                 var json =  {"Descripcion": "se registró un nuevo árbol","IdEmpleado": IdEmpleado };
                 var data="Registro Árbol -> "+JSON.stringify(json)+""
                 await bitacoraDB.registerBitacora(data,IdEmpleado);
-            } else if(result.recordset[0].Arbol==-2){
+            } else if(result.recordset[0].Arbol==-1){
                 mr = {
                     state: 204,
                     data: "El Identificador del Árbol ya Existe!",

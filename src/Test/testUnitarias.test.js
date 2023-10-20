@@ -78,7 +78,7 @@ test('Prueba Lotes- Eliminar Lote', () => {
 
 
 //LOGIN
-test('Prueba Login- Inicio de Sesion', () => {
+test('Prueba Login Token Seguridad', () => {
     api.get("/user")
         .expect('Content-Type', /application\/json/)
 })

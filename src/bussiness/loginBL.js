@@ -10,8 +10,8 @@ function loginUser(datos) {
 
         try {
             if (result.recordset[0].Empleado > 0) {
-                const token = jwt.sign(datos, 'stil');
-                mr = { state: 200, data: result.recordset[0], message: 'SUCCESS' }
+                const token = jwt.sign(result.recordset[0], 'stil');
+                mr = { state: 200, data: token, message: 'SUCCESS' }
                //mr = { state: 200, data: "Inicio de Sesión con Éxito!", message: "SUCCES" };
 
             } else if(result.recordset[0].Empleado =-1) {
